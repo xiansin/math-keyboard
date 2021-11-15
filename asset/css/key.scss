@@ -1,0 +1,21 @@
+.math-key{
+  background-image: url("../image/keyboard-map.jpg");
+  width: 148px;
+  height: 122px;
+  margin: 12px;
+  text-align: center;
+  line-height: 121px;
+  font-size: 16px;
+  color: #49494d;
+  cursor: pointer;
+  float: left;
+  position: relative;
+}
+.xiaoyu{
+  @include math(0,-26);
+}
+@mixin math($x,$y){
+  background-position: #{$x}px #{$y}px;
+}
+
+  　　　　

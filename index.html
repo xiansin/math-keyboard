@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>键盘</title>
+    <link rel="stylesheet" href="./asset/lib/mathquill-0.10.1/mathquill.css">
+    <link rel="stylesheet" href="./asset/lib/mathquill-0.10.1/mathquill-basic.css">
+    <link rel="stylesheet" href="./asset/css/keyboard.css">
+    <link rel="stylesheet" href="./asset/css/math-key.css">
+</head>
+<body>
+<div class="container">
+    <div class="latex-code"><code id="latex"></code></div>
+    <img src="#" alt="" id="img" style="max-width: 100vw">
+    <div class="keyboard">
+        <div class="render mq-math-mode" id="math_field"></div>
+        <div class="key-list"></div>
+        <div class="tools-keys"></div>
+    </div>
+    <div class="sub-list"></div>
+</div>
+
+<script src="./asset/lib/jquery-1.12.4.min.js"></script>
+<script src="./asset/lib/mathquill-0.10.1/mathquill.min.js"></script>
+<script src="./asset/js/event.js"></script>
+<script src="./asset/js/render.js"></script>
+<script src="./asset/js/input.js"></script>
+<script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"></script>
+<script>
+   $(function () {
+       let latex = getQueryVariable('latex');
+       latex = latex ? decodeURIComponent(latex) : '';
+       Render().renderView();
+       Input().init({initLatex: latex});
+       document.addEventListener('UniAppJSBridgeReady', function() {
+           document.addEventListener(INPUT_EVENT, function(event){
+               console.log('input：', event.detail);
+               uni.postMessage({
+                   data: {
+                       message: event.detail,
+                       type: INPUT_EVENT
+                   }
+               })
+           });
+           document.addEventListener(DELETE_EVENT, function(event){
+               console.log('delete：', event.detail);
+               uni.postMessage({
+                   data: {
+                       message: event.detail,
+                       type: DELETE_EVENT
+                   }
+               })
+           });
+           document.addEventListener(SUB_EVENT, function(event){
+               console.log('sub：', event.detail);
+               uni.postMessage({
+                   data: {
+                       message: event.detail,
+                       type: SUB_EVENT
+                   }
+               })
+           });
+       });
+   })
+</script>
+</body>
+</html>
